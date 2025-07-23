@@ -4,29 +4,28 @@
 
   <h1>{{ book.title }}</h1>
   <h3>by {{ book.author }}</h3>
-  <p>Total Pages: {{ book.total_pages }}</p>
+  <p>Total Pages: {{ book.total_pages }} | Status: {{ book.status.replace('_', ' ')|title }}</p>
 
   <hr>
 
-  <h2>Add Progress</h2>
-  <form action="{{ url_for('books.add_progress', book_id=book.id) }}" method="post">
-    <div>
-        <label for="pages_read">Pages Read in this Session:</label><br>
-        <input type="number" name="pages_read" id="pages_read" placeholder="e.g., 25">
-    </div>
-    <br>
-    <div>
-        <label for="notes">Add a Note:</label><br>
-        <textarea name="notes" id="notes" rows="4" cols="50" placeholder="Your thoughts, reflections, etc."></textarea>
-    </div>
-    <br>
-    <div>
-        <label for="quote">Add a Quote:</label><br>
-        <textarea name="quote" id="quote" rows="4" cols="50" placeholder="A memorable line from the book."></textarea>
-    </div>
-    <br>
-    <button type="submit">Save Progress</button>
-  </form>
+  <div class="card">
+    <h2>Add Reading Progress</h2>
+    <form action="{{ url_for('books.add_progress', book_id=book.id) }}" method="post">
+      <div class="form-group">
+          <label for="pages_read">Pages Read in this Session:</label>
+          <input type="number" name="pages_read" id="pages_read" placeholder="e.g., 25">
+      </div>
+      <div class="form-group">
+          <label for="notes">Add a Note:</label>
+          <textarea name="notes" id="notes" rows="4" placeholder="Your thoughts, reflections, etc."></textarea>
+      </div>
+      <div class="form-group">
+          <label for="quote">Add a Quote:</label>
+          <textarea name="quote" id="quote" rows="4" placeholder="A memorable line from the book."></textarea>
+      </div>
+      <button type="submit" class="btn">Save Progress</button>
+    </form>
+  </div>
 
   <hr>
 
@@ -59,5 +58,4 @@
   {% if not quotes_found %}
     <p>No quotes for this book yet.</p>
   {% endif %}
-
 {% endblock %}
