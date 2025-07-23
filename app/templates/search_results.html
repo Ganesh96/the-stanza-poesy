@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <a href="{{ url_for('users.dashboard') }}">&larr; Back to Dashboard</a>
+  <h1>Search Results for "{{ query }}"</h1>
+  
+  {% if books %}
+    <ul>
+      {% for book in books %}
+        <li>
+          <a href="{{ url_for('books.detail', book_id=book.id) }}">{{ book.title }}</a> by {{ book.author }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No books found matching your search.</p>
+  {% endif %}
+{% endblock %}

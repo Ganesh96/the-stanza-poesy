@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+  <a href="{{ url_for('users.dashboard') }}">&larr; Back to Dashboard</a>
+
+  <h1>{{ book.title }}</h1>
+  <h3>by {{ book.author }}</h3>
+  <p>Total Pages: {{ book.total_pages }}</p>
+
+  <hr>
+
+  <h2>Add Progress</h2>
+  <form action="{{ url_for('books.add_progress', book_id=book.id) }}" method="post">
+    <div>
+        <label for="pages_read">Pages Read in this Session:</label><br>
+        <input type="number" name="pages_read" id="pages_read" placeholder="e.g., 25">
+    </div>
+    <br>
+    <div>
+        <label for="notes">Add a Note:</label><br>
+        <textarea name="notes" id="notes" rows="4" cols="50" placeholder="Your thoughts, reflections, etc."></textarea>
+    </div>
+    <br>
+    <div>
+        <label for="quote">Add a Quote:</label><br>
+        <textarea name="quote" id="quote" rows="4" cols="50" placeholder="A memorable line from the book."></textarea>
+    </div>
+    <br>
+    <button type="submit">Save Progress</button>
+  </form>
+
+  <hr>
+
+  <h2>Notes</h2>
+  {% set notes_found = false %}
+  <ul>
+    {% for entry in progress_entries %}
+      {% if entry.notes %}
+        {% set notes_found = true %}
+        <li>{{ entry.notes }} <br><small><em>(Added on: {{ entry.progress_date.split('T')[0] }})</em></small></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% if not notes_found %}
+    <p>No notes for this book yet.</p>
+  {% endif %}
+
+  <hr>
+
+  <h2>Quotes</h2>
+  {% set quotes_found = false %}
+  <ul>
+    {% for entry in progress_entries %}
+      {% if entry.quote %}
+        {% set quotes_found = true %}
+        <li>"{{ entry.quote }}" <br><small><em>(Added on: {{ entry.progress_date.split('T')[0] }})</em></small></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% if not quotes_found %}
+    <p>No quotes for this book yet.</p>
+  {% endif %}
+
+{% endblock %}

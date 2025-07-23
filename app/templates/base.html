@@ -5,6 +5,15 @@
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flashes">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
   {% block content %}{% endblock %}
 </body>
 </html>

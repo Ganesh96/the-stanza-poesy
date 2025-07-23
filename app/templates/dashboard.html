@@ -1,10 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>Your Books</h1>
-  <form action="/books/add" method="post">
-    <input name="title" placeholder="Title">
+  <h1>Reading Tracker</h1>
+
+  <hr>
+  
+  <h2>Search for a Book</h2>
+  <form action="{{ url_for('books.search') }}" method="get">
+    <input name="q" placeholder="Search by title..." required>
+    <button type="submit">Search</button>
+  </form>
+
+  <hr>
+
+  <h2>Or Add a New Book</h2>
+  <form action="{{ url_for('books.add_book') }}" method="post">
+    <input name="title" placeholder="Title" required>
     <input name="author" placeholder="Author">
-    <input name="pages" type="number" placeholder="Pages">
+    <input name="pages" type="number" placeholder="Pages" required>
     <select name="status">
       <option value="want_to_read">Want to Read</option>
       <option value="currently_reading">Currently Reading</option>
@@ -12,9 +24,16 @@
     </select>
     <button type="submit">Add Book</button>
   </form>
-  <ul>
-    {% for book in books %}
-      <li>{{ book.title }} by {{ book.author }} - {{ book.status }}</li>
-    {% endfor %}
-  </ul>
+
+  <hr>
+  
+  <h2>Sync with Goodreads</h2>
+  <form action="{{ url_for('books.import_csv') }}" method="post" enctype="multipart/form-data">
+      <p>Upload your Goodreads CSV export file here.</p>
+      <input type="file" name="csv_file" accept=".csv" required>
+      <button type="submit">Import</button>
+  </form>
+  <br>
+  <a href="{{ url_for('books.export_csv') }}"><button>Export All Books</button></a>
+
 {% endblock %}
