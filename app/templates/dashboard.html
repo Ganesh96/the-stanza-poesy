@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Your Books</h1>
+  <form action="/books/add" method="post">
+    <input name="title" placeholder="Title">
+    <input name="author" placeholder="Author">
+    <input name="pages" type="number" placeholder="Pages">
+    <select name="status">
+      <option value="want_to_read">Want to Read</option>
+      <option value="currently_reading">Currently Reading</option>
+      <option value="read">Read</option>
+    </select>
+    <button type="submit">Add Book</button>
+  </form>
+  <ul>
+    {% for book in books %}
+      <li>{{ book.title }} by {{ book.author }} - {{ book.status }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
